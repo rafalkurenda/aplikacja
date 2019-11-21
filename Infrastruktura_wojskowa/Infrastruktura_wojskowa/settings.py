@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'infrastuktura_wojskowa_app',
+    'rest_framework',
 
 ]
 
@@ -77,8 +79,15 @@ WSGI_APPLICATION = 'Infrastruktura_wojskowa.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'kurendar',
+        'USER': 'kurendar',
+        'PASSWORD': 'rafal',
+        'HOST': '213.184.8.199',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
