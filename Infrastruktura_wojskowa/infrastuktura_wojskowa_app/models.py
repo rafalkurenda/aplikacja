@@ -32,8 +32,7 @@ class Stopien(models.Model):
 class Personel(models.Model):
     imie = models.CharField(max_length=30)
     nazwisko = models.CharField(max_length=30)
-    stopien = models.IntegerField()
-    adres = models.ForeignKey(Adres, on_delete=models.CASCADE)
+    adres = models.ForeignKey(Adres, on_delete=models.CASCADE, related_name="adres_rel")
     stopien = models.OneToOneField(
         Stopien,
         on_delete=models.CASCADE,

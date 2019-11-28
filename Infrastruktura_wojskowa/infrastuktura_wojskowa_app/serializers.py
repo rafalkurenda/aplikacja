@@ -1,65 +1,59 @@
 from rest_framework import serializers
-from .models import Oddzialy,Zwiazki_taktyczne,Zwiazki_operacyjne,Personel,Pododdzial,Adres,Stopien
+from .models import Oddzialy,Zwiazki_taktyczne,Zwiazki_operacyjne,Personel,Pododdzial,Adres,Stopien,Sprzet,Baza
 
 
 
-class PododdzialSer(serializers.Serializer):
-    nazwa = serializers.CharField(max_length=30)
+class PododdzialSer(serializers.ModelSerializer):
 
-class OddzialySer(serializers.Serializer):
-    pododdzial = serializers.RelatedField(source='Pododdzial.nazwa', read_only=True)
+    class Meta:
+        model = Pododdzial
+        fields = "__all__"
+
+class OddzialySer(serializers.ModelSerializer):
 
     class Meta:
         model = Oddzialy
         fields = "__all__"
 
 
-class Zwiazki_taktyczneSer(serializers.Serializer):
-
-    oddzialy = serializers.RelatedField(source='Oddzialy.nazwa',read_only=True)
+class Zwiazki_taktyczneSer(serializers.ModelSerializer):
 
     class Meta:
         model = Zwiazki_taktyczne
         fields = "__all__"
 
-class Zwiazki_operacyjneSer(serializers.Serializer):
-    nazwa = serializers.CharField(max_length=30)
-    zwiazki_taktyczne = serializers.RelatedField(source='Zwiazki_taktyczne.nazwa',read_only=True)
+class Zwiazki_operacyjneSer(serializers.ModelSerializer):
 
     class Meta:
-        model = Zwiazki_taktyczne
+        model = Zwiazki_operacyjne
         fields = "__all__"
 
-class AdresSer(serializers.Serializer):
-    ulica = serializers.CharField(max_length=30)
-    numer = serializers.CharField(max_length=30)
-    kod_pocztowy = serializers.CharField(max_length=30)
-    miejscowosc = serializers.CharField(max_length=30)
+class AdresSer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        return Adres.objects.create(**validated_data)
+    class Meta:
+        model = Adres
+        fields = "__all__"
 
-class StopienSer(serializers.Serializer):
-    nazwa = serializers.CharField(max_length=30)
-    wynagrodzenie = serializers.IntegerField()
+class StopienSer(serializers.ModelSerializer):
+    class Meta:
+        model = Stopien
+        fields = "__all__"
 
-class PersonelSer(serializers.Serializer):
-    adres = AdresSer(read_only=True)
-    stopien = serializers.CharField(source='Stopien.nazwa')
-    poddodzial = serializers.CharField(source='Poddodzial.nazwa')
+
+class PersonelSer(serializers.ModelSerializer):
 
     class Meta:
         model = Personel
         fields = "__all__"
 
 
-class SprzetSer(serializers.Serializer):
-    nazwa = serializers.CharField(max_length=30)
-    ilosc = serializers.IntegerField()
+class SprzetSer(serializers.ModelSerializer):
+    class Meta:
+        model = Sprzet
+        fields = "__all__"
 
-class BazaSer(serializers.Serializer):
-    nazwa = serializers.CharField(max_length=30)
-    adres = AdresSer(read_only=True)
-    zwiazki_taktyczne = serializers.RelatedField(source='Zwiazki_taktyczne.nazwa', read_only=True)
-    sprzet = SprzetSer(read_only=True)
+class BazaSer(serializers.ModelSerializer):
+    class Meta:
+        model = Baza
+        fields = "__all__"
 
