@@ -1,7 +1,15 @@
 from rest_framework import serializers
 from .models import Oddzialy,Zwiazki_taktyczne,Zwiazki_operacyjne,Personel,Pododdzial,Adres,Stopien,Sprzet,Baza
+from django.contrib.auth.models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+    tworcasprzet = serializers.PrimaryKeyRelatedField(many=True, queryset= Sprzet.objects.all())
+    tworcabaza = serializers.PrimaryKeyRelatedField(many=True, queryset= Baza.objects.all())
+
+    class Meta:
+        model = User
+        fields = ['id','username', 'tworcasprzet','tworcabaza']
 
 class PododdzialSer(serializers.ModelSerializer):
 
@@ -29,10 +37,10 @@ class Zwiazki_operacyjneSer(serializers.ModelSerializer):
         fields = "__all__"
 
 class AdresSer(serializers.ModelSerializer):
-
     class Meta:
         model = Adres
         fields = "__all__"
+
 
 class StopienSer(serializers.ModelSerializer):
     class Meta:
@@ -41,11 +49,13 @@ class StopienSer(serializers.ModelSerializer):
 
 
 class PersonelSer(serializers.ModelSerializer):
-
+    adres = serializers.CharField(source="adres.ulica", read_only=True)
+    numer = serializers.CharField(source="adres.numer", read_only=True)
+    stopien = serializers.CharField(source="stopien.nazwa", read_only=True)
+    pododdzial = serializers.CharField(source="pododdzial.nazwa", read_only=True)
     class Meta:
         model = Personel
         fields = "__all__"
-
 
 class SprzetSer(serializers.ModelSerializer):
     class Meta:
@@ -56,4 +66,6 @@ class BazaSer(serializers.ModelSerializer):
     class Meta:
         model = Baza
         fields = "__all__"
+
+
 

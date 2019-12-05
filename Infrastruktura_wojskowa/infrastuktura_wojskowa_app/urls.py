@@ -15,9 +15,14 @@ router.register(r'stopien', views.StopienView)
 router.register(r'baza', views.BazaView)
 
 
+
+
+
 urlpatterns = [
     path('xd/', include(router.urls)),
     path('', index, name='index_name'),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('users', views.UserList.as_view()),
+    path('users/<int:pk>/', views.UserDetail.as_view()),
 ]
 

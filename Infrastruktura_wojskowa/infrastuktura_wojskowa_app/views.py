@@ -1,8 +1,17 @@
 from django.shortcuts import render
 from .models import Oddzialy,Zwiazki_taktyczne,Zwiazki_operacyjne,Personel,Pododdzial,Adres,Stopien,Sprzet,Baza
-from rest_framework import viewsets
-from .serializers import PersonelSer, AdresSer, PododdzialSer, OddzialySer, Zwiazki_operacyjneSer, Zwiazki_taktyczneSer, StopienSer, SprzetSer, BazaSer
+from rest_framework import viewsets, generics
+from .serializers import PersonelSer, AdresSer, PododdzialSer, OddzialySer, Zwiazki_operacyjneSer, Zwiazki_taktyczneSer, StopienSer, SprzetSer, BazaSer, UserSerializer
+from django.contrib.auth.models import User
 
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class PersonelView(viewsets.ModelViewSet):
 
