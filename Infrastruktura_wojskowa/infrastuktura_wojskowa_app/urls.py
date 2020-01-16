@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import  index
+from .views import index
 from rest_framework import routers
 
 from infrastuktura_wojskowa_app import views
@@ -12,10 +12,8 @@ router.register(r'oddzialy', views.OddzialyView)
 router.register(r'operacyjne', views.Zwiazki_operacyjneView)
 router.register(r'taktyczne', views.Zwiazki_taktyczneView)
 router.register(r'stopien', views.StopienView)
+router.register(r'sprzet', views.SprzetView)
 router.register(r'baza', views.BazaView)
-
-
-
 
 
 urlpatterns = [

@@ -3,6 +3,7 @@ from .models import Oddzialy,Zwiazki_taktyczne,Zwiazki_operacyjne,Personel,Podod
 from rest_framework import viewsets, generics
 from .serializers import PersonelSer, AdresSer, PododdzialSer, OddzialySer, Zwiazki_operacyjneSer, Zwiazki_taktyczneSer, StopienSer, SprzetSer, BazaSer, UserSerializer
 from django.contrib.auth.models import User
+from rest_framework import permissions
 
 
 class UserList(generics.ListAPIView):
@@ -47,12 +48,18 @@ class StopienView(viewsets.ModelViewSet):
 class SprzetView(viewsets.ModelViewSet):
     queryset = Sprzet.objects.all()
     serializer_class = SprzetSer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(tworca=self.request.user)
 
 class BazaView(viewsets.ModelViewSet):
     queryset = Baza.objects.all()
     serializer_class = BazaSer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-
+    def perform_create(self, serializer):
+        serializer.save(tworca=self.request.user)
 
 
 

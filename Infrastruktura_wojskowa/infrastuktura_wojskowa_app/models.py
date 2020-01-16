@@ -68,7 +68,7 @@ class Personel(models.Model):
 class Sprzet(models.Model):
     nazwa = models.CharField(max_length=30)
     ilosc = models.IntegerField()
-    tworca = models.ForeignKey("auth.User", related_name="tworcasprzet", on_delete=models.CASCADE)
+    tworca = models.ForeignKey("auth.User", related_name="tworcasprzet", on_delete=models.CASCADE, default="nieznany")
 
     def __str__(self):
         return self.nazwa
@@ -81,7 +81,7 @@ class Baza(models.Model):
     )
     zwiazki_taktyczne = models.ForeignKey(Zwiazki_taktyczne, on_delete=models.CASCADE)
     sprzet = models.ForeignKey(Sprzet, on_delete=models.CASCADE)
-    tworca = models.ForeignKey('auth.User', related_name="tworcabaza", on_delete=models.CASCADE)
+    tworca = models.ForeignKey('auth.User', related_name="tworcabaza", on_delete=models.CASCADE, default="nieznany")
 
     def __str__(self):
         return self.nazwa

@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    tworcasprzet = serializers.PrimaryKeyRelatedField(many=True, queryset= Sprzet.objects.all())
-    tworcabaza = serializers.PrimaryKeyRelatedField(many=True, queryset= Baza.objects.all())
 
     class Meta:
+        tworcasprzet = serializers.PrimaryKeyRelatedField(many=True, queryset=Sprzet.objects.all())
+        tworcabaza = serializers.PrimaryKeyRelatedField(many=True, queryset=Baza.objects.all())
         model = User
         fields = ['id','username', 'tworcasprzet','tworcabaza']
 
@@ -49,21 +49,25 @@ class StopienSer(serializers.ModelSerializer):
 
 
 class PersonelSer(serializers.ModelSerializer):
-    adres = serializers.CharField(source="adres.ulica", read_only=True)
-    numer = serializers.CharField(source="adres.numer", read_only=True)
-    stopien = serializers.CharField(source="stopien.nazwa", read_only=True)
-    pododdzial = serializers.CharField(source="pododdzial.nazwa", read_only=True)
+
     class Meta:
+        adres = serializers.CharField(source="adres.ulica", read_only=True)
+        numer = serializers.CharField(source="adres.numer", read_only=True)
+        stopien = serializers.CharField(source="stopien.nazwa", read_only=True)
+        pododdzial = serializers.CharField(source="pododdzial.nazwa", read_only=True)
+
         model = Personel
         fields = "__all__"
 
 class SprzetSer(serializers.ModelSerializer):
     class Meta:
+        tworca = serializers.ReadOnlyField(source='tworcasprzet.username')
         model = Sprzet
         fields = "__all__"
 
 class BazaSer(serializers.ModelSerializer):
     class Meta:
+        tworca = serializers.ReadOnlyField(source='tworcabaza.username')
         model = Baza
         fields = "__all__"
 
