@@ -18,6 +18,7 @@ class PersonelView(viewsets.ModelViewSet):
 
     queryset = Personel.objects.all()
     serializer_class = PersonelSer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class AdresView(viewsets.ModelViewSet):

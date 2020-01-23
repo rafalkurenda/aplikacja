@@ -49,12 +49,11 @@ class StopienSer(serializers.ModelSerializer):
 
 
 class PersonelSer(serializers.ModelSerializer):
-
+    adres = serializers.CharField(source="adres.ulica", read_only=True)
+    numer = serializers.CharField(source="adres.numer", read_only=True)
+    stopien = serializers.CharField(source="stopien.nazwa", read_only=True)
+    pododdzial = serializers.CharField(source="pododdzial.nazwa", read_only=True)
     class Meta:
-        adres = serializers.CharField(source="adres.ulica", read_only=True)
-        numer = serializers.CharField(source="adres.numer", read_only=True)
-        stopien = serializers.CharField(source="stopien.nazwa", read_only=True)
-        pododdzial = serializers.CharField(source="pododdzial.nazwa", read_only=True)
 
         model = Personel
         fields = "__all__"

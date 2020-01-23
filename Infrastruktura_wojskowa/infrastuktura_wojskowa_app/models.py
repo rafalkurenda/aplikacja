@@ -51,12 +51,12 @@ class Personel(models.Model):
     imie = models.CharField(max_length=30)
     nazwisko = models.CharField(max_length=30)
     adres = models.ForeignKey(Adres, on_delete=models.CASCADE, related_name="adres_rel")
-    stopien = models.OneToOneField(
+    stopien = models.ForeignKey(
         Stopien,
         on_delete=models.CASCADE,
 
     )
-    pododdzial = models.OneToOneField(
+    pododdzial = models.ForeignKey(
         Pododdzial,
         on_delete=models.CASCADE,
     )
@@ -75,7 +75,7 @@ class Sprzet(models.Model):
 
 class Baza(models.Model):
     nazwa = models.CharField(max_length=30)
-    adres = models.OneToOneField(
+    adres = models.ForeignKey(
         Adres,
         on_delete=models.CASCADE,
     )
